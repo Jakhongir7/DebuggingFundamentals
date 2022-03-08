@@ -10,27 +10,29 @@ namespace Task1
         /// <param name="numbers">Numbers to sort.</param>
         public static void Sort(int[] numbers)
         {
-            int temp;
-            if (numbers != null)
-            {
-                for (int i = 0; i < numbers.Length - 1; i++)
-                {
-                    for (int j = 0; j < numbers.Length - i - 1; j++)
-                    {
-                        if (numbers[j + 1] < numbers[j])
-                        {
-                            temp = numbers[j];
-                            numbers[j] = numbers[j + 1];
-                            numbers[j + 1] = temp;
-
-                        }
-                    }
-                }
-            }
-            else
+            if (numbers == null)
             {
                 throw new ArgumentNullException();
             }
+            for (int i = 0; i < numbers.Length - 1; i++)
+            {
+                for (int j = 0; j < numbers.Length - i - 1; j++)
+                {
+                    if (numbers[j + 1] < numbers[j])
+                    {
+                        Swap(numbers, j);
+
+                    }
+                }
+            }
+        }
+
+        public static void Swap(int[] numbers, int j)
+        {
+            int temp;
+            temp = numbers[j];
+            numbers[j] = numbers[j + 1];
+            numbers[j + 1] = temp;
         }
 
         /// <summary>
@@ -43,22 +45,24 @@ namespace Task1
         /// otherwise -1.</returns>
         public static int IndexOf(Product[] products, Predicate<Product> predicate)
         {
-            if (products != null && predicate != null)
-            {
-                for (int i = 0; i < products.Length; i++)
-                {
-                    var product = products[i];
-                    if (predicate(product))
-                    {
-                        return i;
-                    }
-                }
-            }
-            else
+            if (products == null || predicate == null)
             {
                 throw new ArgumentNullException();
             }
+            for (int i = 0; i < products.Length; i++)
+            {
+                if (CheckEquality(products[i], predicate, i) > 0)
+                    return i;
+            }
+            return -1;
+        }
 
+        public static int CheckEquality(Product product, Predicate<Product> predicate, int i)
+        {
+            if (predicate(product))
+            {
+                return i;
+            }
             return -1;
         }
     }
