@@ -51,19 +51,15 @@ namespace Task1
             }
             for (int i = 0; i < products.Length; i++)
             {
-                if (CheckEquality(products[i], predicate, i) > 0)
+                if (CheckEquality(products[i], predicate))
                     return i;
             }
             return -1;
         }
 
-        public static int CheckEquality(Product product, Predicate<Product> predicate, int i)
+        public static bool CheckEquality(Product product, Predicate<Product> predicate)
         {
-            if (predicate(product))
-            {
-                return i;
-            }
-            return -1;
+            return predicate(product);
         }
     }
 
